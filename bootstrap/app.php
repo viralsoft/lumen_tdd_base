@@ -27,6 +27,8 @@ $app->withFacades();
 
 $app->withEloquent();
 
+$app->alias('cache', \Illuminate\Cache\CacheManager::class);  // if you don't have this already
+
 /*
 |--------------------------------------------------------------------------
 | Register Container Bindings
@@ -61,6 +63,8 @@ $app->singleton(
 
 $app->configure('app');
 $app->configure('auth');
+$app->configure('permission');
+
 
 /*
 |--------------------------------------------------------------------------
@@ -78,7 +82,9 @@ $app->configure('auth');
 // ]);
 
 $app->routeMiddleware([
-    'auth' => App\Http\Middleware\Authenticate::class,
+    'auth'       => App\Http\Middleware\Authenticate::class,
+    'permission' => Spatie\Permission\Middlewares\PermissionMiddleware::class,
+    'role'       => Spatie\Permission\Middlewares\RoleMiddleware::class,
 ]);
 
 /*
@@ -97,6 +103,8 @@ $app->register(App\Providers\AuthServiceProvider::class);
 $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
+$app->register(Spatie\Permission\PermissionServiceProvider::class);
+
 
 /*
 |--------------------------------------------------------------------------
