@@ -50,6 +50,15 @@ $app->singleton(
     App\Console\Kernel::class
 );
 
+$app->bind('League\Fractal\Manager', function ($app) {
+    $manager = new \League\Fractal\Manager;
+
+    // Use the serializer of your choice.
+    $manager->setSerializer(new League\Fractal\Serializer\DataArraySerializer);
+
+    return $manager;
+});
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
