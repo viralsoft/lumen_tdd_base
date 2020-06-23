@@ -59,6 +59,10 @@ $app->bind('League\Fractal\Manager', function ($app) {
     return $manager;
 });
 
+$app->bind('path.public', function () {
+    return __DIR__ . 'public/';
+});
+
 /*
 |--------------------------------------------------------------------------
 | Register Config Files
@@ -73,6 +77,7 @@ $app->bind('League\Fractal\Manager', function ($app) {
 $app->configure('app');
 $app->configure('auth');
 $app->configure('permission');
+$app->configure('modules');
 
 
 /*
@@ -113,6 +118,7 @@ $app->register(App\Providers\EventServiceProvider::class);
 $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Spatie\Permission\PermissionServiceProvider::class);
+$app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
 
 
 /*
