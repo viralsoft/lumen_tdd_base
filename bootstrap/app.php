@@ -119,6 +119,8 @@ $app->register(Flipbox\LumenGenerator\LumenGeneratorServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(Spatie\Permission\PermissionServiceProvider::class);
 $app->register(Nwidart\Modules\LumenModulesServiceProvider::class);
+$app->register(SwooleTW\Http\LumenServiceProvider::class);
+$app->register(Hhxsv5\LaravelS\Illuminate\LaravelSServiceProvider::class);
 
 
 /*
