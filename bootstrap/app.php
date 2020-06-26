@@ -78,6 +78,7 @@ $app->configure('app');
 $app->configure('auth');
 $app->configure('permission');
 $app->configure('modules');
+$app->configure('pagination');
 
 
 /*
