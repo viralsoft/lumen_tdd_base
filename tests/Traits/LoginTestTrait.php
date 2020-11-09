@@ -36,5 +36,7 @@ trait LoginTestTrait
             'Authorization' => "bearer " . $data['access_token']
         ]);
 
+        return $data;
+
     }
 }

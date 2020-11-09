@@ -81,11 +81,15 @@ class ProfileController extends Controller
         $profile = $userLogin->profile;
 
         $this->validate($request, [
-            'phone' => 'required|unique:profile_user,phone,' . $profile->id,
+            'phone' => 'required|unique:profile_user,phone,' . @$profile->id,
             'birthday' => 'required|date_format:Y-m-d|before:today'
         ]);
-
-        $userLogin->profile()->update($request->all());
+        if ($profile) {
+            $userLogin->profile()->update($request->all());
+        } else {
+            $profile = new ProfileUser($request->all());
+            $userLogin->profile()->save($profile);
+        }
 
         return response()->json([
             'data' => $user->profile,
