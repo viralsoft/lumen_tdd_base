@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
+use Illuminate\Http\Request;
+
 class AuthController extends Controller
 {
     /**
@@ -11,7 +14,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth:api', ['except' => ['login']]);
+        $this->middleware('auth:api', ['except' => ['login', 'register']]);
     }
 
     /**
@@ -74,7 +77,24 @@ class AuthController extends Controller
         return response()->json([
             'access_token' => $token,
             'token_type'   => 'bearer',
-            'expires_in'   => auth()->factory()->getTTL() * 60
+            'expires_in'   => auth()->factory()->getTTL() * 60,
+            'id' => auth()->user()->id
+        ]);
+    }
+
+    public function register(Request $request)
+    {
+        $this->validate($request, [
+            'name' => 'required|string',
+            'email' => 'required|string|email:rfc|unique:users,email',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        $input = $request->only(['email', 'name', 'password']);
+        $input['password'] = app('hash')->driver('bcrypt')->make($input['password']);
+        User::create($input);
+
+        return response()->json([
+            'msg' => 'Register successful.',
         ]);
     }
 }
